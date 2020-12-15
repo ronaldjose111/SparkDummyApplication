@@ -4,7 +4,7 @@ pipeline {
 	maven 'maven363'
 	}
 	environment {
-	ITVERSITY = credential('Itversity')
+	ITVERSITY = credentials('Itversity')
 	}
     stages {
         stage('Compile') {
