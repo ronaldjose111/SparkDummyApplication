@@ -3,6 +3,9 @@ pipeline {
 	tools {
 	maven 'maven363'
 	}
+	environment {
+	ITVERSITY = credential('Itversity')
+	}
     stages {
         stage('Compile') {
             steps {
@@ -19,5 +22,19 @@ pipeline {
                 sh 'cd SparkWordCount && mvn clean package'
             }
         }
+		stage ('Deploy') {
+		parallel {
+		stage('gw02) {
+		steps {
+		sh 'sshpass -p $ITVERSITY_PSW ssh $ITVERSITY_USR@gw02.itversity.com hostname'
+		}
+		}
+		stage('gw03) {
+		steps {
+		sh 'sshpass -p $ITVERSITY_PSW ssh $ITVERSITY_USR@gw03.itversity.com hostname'
+		}
+		}
+		}
+		}
     }
 }
